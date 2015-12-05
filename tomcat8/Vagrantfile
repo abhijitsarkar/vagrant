@@ -1,0 +1,19 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Specify Vagrant version and Vagrant API version
+VAGRANTFILE_API_VERSION = "2"
+Vagrant.require_version ">= 1.7.0"
+ENV['VAGRANT_DEFAULT_PROVIDER'] = 'docker'
+
+# Create and configure the Docker container(s)
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.provider "docker" do |docker|
+    docker.vagrant_vagrantfile = "../Vagrantfile"
+    docker.image = "abhijitsarkar/docker:tomcat8"
+    docker.ports = ["8080:8080"]
+    docker.name = "tomcat8"
+    docker.remains_running = "true"
+    docker.cmd = ["/opt/tomcat/bin/catalina.sh", "run"]
+  end
+end
